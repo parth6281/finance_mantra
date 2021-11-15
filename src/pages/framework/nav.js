@@ -26,6 +26,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import Contact from '../contact/contact'
 import CustomizedBreadcrumbs from '../../components/breadcrumb'
 import './nav.css';
+import SignUp from '../signup';
 
 
 const drawerWidth = 240;
@@ -154,7 +155,8 @@ function Framework(props) {
                     sx={{ width: '100%', overflow: 'auto' }}
                     
                 >
-                   <Contact />
+                   {/* <Contact /> */}
+                   < SignUp />
                 </Box>
             </Box>
             <AppBar position='fixed' sx={{
