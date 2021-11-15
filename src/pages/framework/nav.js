@@ -25,6 +25,7 @@ import { Outlet } from 'react-router-dom';
 import SearchIcon from '@mui/icons-material/Search';
 import Contact from '../contact/contact'
 import CustomizedBreadcrumbs from '../../components/breadcrumb'
+import { About } from '../about/about';
 import './nav.css';
 import SignUp from '../signup';
 
@@ -159,8 +160,7 @@ function Framework(props) {
                     sx={{ width: '100%', overflow: 'auto' }}
                     
                 >
-                   {/* <Contact /> */}
-                   < SignUp />
+                   <About />
                 </Box>
             </Box>
             <AppBar position='fixed' sx={{
