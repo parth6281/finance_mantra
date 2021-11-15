@@ -63,6 +63,10 @@ function Framework(props) {
                 <ListItem button key={'Overview'}>
                     <AssessmentIcon sx={{ mr: '25px' }} />
                     <ListItemText primary={'Overview'} />
+                    </ListItem>
+                    <ListItem button key={'About Us'}>
+                    <AssessmentIcon sx={{ mr: '25px' }} />
+                    <ListItemText primary={'About Us'} />
                 </ListItem>
                 <ListItem button key={'Contact Us'}>
                     <CallIcon sx={{ mr: '25px' }} />
