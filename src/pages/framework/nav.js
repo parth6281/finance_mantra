@@ -29,7 +29,6 @@ import { About } from '../about/about';
 import './nav.css';
 import SignUp from '../signup';
 
-
 const drawerWidth = 240;
 
 function Framework(props) {
