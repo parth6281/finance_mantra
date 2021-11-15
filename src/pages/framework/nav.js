@@ -28,7 +28,6 @@ import CustomizedBreadcrumbs from '../../components/breadcrumb'
 import './nav.css';
 import SignUp from '../signup';
 
-
 const drawerWidth = 240;
 
 function Framework(props) {
@@ -159,8 +158,8 @@ function Framework(props) {
                     sx={{ width: '100%', overflow: 'auto' }}
                     
                 >
-                   {/* <Contact /> */}
-                   < SignUp />
+                   <Contact />
+                   {/* < SignUp /> */}
                 </Box>
             </Box>
             <AppBar position='fixed' sx={{
