@@ -157,9 +157,13 @@ function Framework(props) {
                 <Box
                     component="main"
                     sx={{ width: '100%', overflow: 'auto' }}
-                    
+
                 >
+<<<<<<< Updated upstream:client/src/pages/framework/nav.js
                    <About />
+=======
+                    <About />
+>>>>>>> Stashed changes:src/pages/framework/nav.js
                 </Box>
             </Box>
             <AppBar position='fixed' sx={{
