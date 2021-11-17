@@ -63,8 +63,8 @@ function Framework(props) {
                 <ListItem button key={'Overview'}>
                     <AssessmentIcon sx={{ mr: '25px' }} />
                     <ListItemText primary={'Overview'} />
-                    </ListItem>
-                    <ListItem button key={'About Us'}>
+                </ListItem>
+                <ListItem button key={'About Us'}>
                     <AssessmentIcon sx={{ mr: '25px' }} />
                     <ListItemText primary={'About Us'} />
                 </ListItem>
@@ -159,11 +159,7 @@ function Framework(props) {
                     sx={{ width: '100%', overflow: 'auto' }}
 
                 >
-<<<<<<< Updated upstream:client/src/pages/framework/nav.js
-                   <About />
-=======
-                    <About />
->>>>>>> Stashed changes:src/pages/framework/nav.js
+                    <Outlet />
                 </Box>
             </Box>
             <AppBar position='fixed' sx={{

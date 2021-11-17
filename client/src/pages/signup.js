@@ -1,17 +1,19 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
+import { Link } from 'react-router-dom';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import CustomizedSnackbars from '../components/notification.js';
+import axios, { Routes } from '../services/axios'
 
 function Copyright(props) {
   return (
@@ -29,20 +31,127 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignUp() {
-  const handleSubmit = (event) => {
+
+
+
+
+  const [errors, setError] = useState(null);
+
+
+
+  const validateAlphaNumeric = (text) => {
+    const regex = new RegExp(/^[a-zA-Z0-9]+$/i)
+    if (!regex.test(text)) {
+      return false
+    }
+    return true
+  }
+
+  const validateEmail = (email) => {
+    const regex = new RegExp(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i)
+    if (!regex.test(email)) {
+      return false
+    }
+    return true
+  }
+
+  const formValidator = function (firstName, lastName, email, password) {
+    setError(null);
+    let firstNameError = ''
+    let lastNameError = ''
+    let emailError = ''
+    let passwordError = ''
+
+    if (firstName.trim().length === 0) {
+      firstNameError = 'First Name is Required'
+    } else if (firstName && !validateAlphaNumeric(firstName.trim())) {
+      firstNameError = 'First Name can only contain Alphanumeric characters'
+    }
+
+    if (lastName.trim().length === 0) {
+      lastNameError = 'Last Name is Required'
+    } else if (lastName && !validateAlphaNumeric(lastName.trim())) {
+      lastNameError = 'Last Name can only contain Alphanumeric characters'
+    }
+
+    if (email.trim().length === 0) {
+      emailError = 'Email is Required'
+    } else if (email && !validateEmail(email.trim())) {
+      emailError = 'Invalid Email'
+    }
+
+    if (password.length === 0) {
+      passwordError = 'Password is Required'
+    } else if (password.length > 0 && password.length < 8) {
+      passwordError = 'Password Should be 8 characters or long'
+    }
+
+    if (
+      firstNameError ||
+      lastNameError ||
+      emailError ||
+      passwordError
+    ) {
+      let errors = [];
+
+      if (firstNameError != '') {
+        errors.push(firstNameError);
+      }
+
+      if (lastNameError != '') {
+        errors.push(lastNameError);
+      }
+
+      if (emailError != '') {
+        errors.push(emailError)
+      }
+
+      if (passwordError != '') {
+        errors.push(passwordError);
+      }
+
+      console.log(errors)
+      setError(errors);
+      return false
+    }
+
+    return true
+  }
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    // eslint-disable-next-line no-console
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
-  };
+
+    const fname = data.get('firstName')
+    const lname = data.get('lastName');
+    const email = data.get('email');
+    const password = data.get('password');
+
+
+    const isValid = formValidator(fname, lname, email, password);
+
+    console.log(isValid)
+
+    if (isValid) {
+      setError(null);
+      const name = fname + ' ' + lname;
+      const { url, method } = Routes.api.register()
+      const { data } = await axios[method](url, { name, email, password });
+
+      if (data.error) {
+        setError([data.error]);
+      } else {
+        console.log('registration ');
+      }
+    }
+  }
+
 
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
+        {errors ? <CustomizedSnackbars op={true} errors={errors} severity={'error'} /> : <></>}
         <Box
           sx={{
             marginTop: 8,
@@ -101,12 +210,6 @@ export default function SignUp() {
                   autoComplete="new-password"
                 />
               </Grid>
-              <Grid item xs={12}>
-                <FormControlLabel
-                  control={<Checkbox value="allowExtraEmails" color="primary" />}
-                  label="I want to receive inspiration, marketing promotions and updates via email."
-                />
-              </Grid>
             </Grid>
             <Button
               type="submit"
@@ -118,15 +221,16 @@ export default function SignUp() {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link to="/login">
                   Already have an account? Sign in
                 </Link>
               </Grid>
             </Grid>
           </Box>
         </Box>
+
         {/* <Copyright sx={{ mt: 5 }} /> */}
       </Container>
-    </ThemeProvider>
+    </ThemeProvider >
   );
 }

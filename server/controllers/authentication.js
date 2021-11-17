@@ -34,14 +34,14 @@ const register = async (req, res) => {
 const login = (req, res) => {
     if (!req.body.email || !req.body.password) {
         return res
-            .status(400)
+            .status(200)
             .json({ "message": "All fields required" });
     }
     passport.authenticate('local', (err, user, info) => {
         let token;
         if (err) {
             return res
-                .status(404)
+                .status(200)
                 .json(err);
         }
         if (user) {
@@ -51,7 +51,7 @@ const login = (req, res) => {
                 .json({ token });
         } else {
             res
-                .status(401)
+                .status(200)
                 .json(info);
         }
 

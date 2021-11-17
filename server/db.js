@@ -47,3 +47,4 @@ require('./models/expenseCategory');
 require('./models/incomeCategory');
 require('./models/expense');
 require('./models/income');
+require('./models/devteam');

@@ -5,7 +5,7 @@ import MemberBrief from "../../components/MemberBrief";
 import avatar from '../../public/images/avatar.jpg'
 import { MemberDetails } from "../../components/memberDetails";
 
-export function About() {
+export default function About() {
 
     let [selected, setMember] = useState(false);
     let [content, setContent] = useState(false);

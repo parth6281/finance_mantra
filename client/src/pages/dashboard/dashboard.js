@@ -10,7 +10,7 @@ import DataTable from '../../components/datagrid';
 
 const SPaper = styled(Paper)({ backgroundColor: '#f5f5f5' });
 
-export function Dashboard() {
+export default function Dashboard() {
     return (
         <div class="overview">
             <Box className="overview-box-container">
