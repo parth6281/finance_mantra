@@ -1,18 +1,29 @@
 import { Typography } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import './about.css';
 import MemberBrief from "../../components/MemberBrief";
 import avatar from '../../public/images/avatar.jpg'
 import { MemberDetails } from "../../components/memberDetails";
+import axios, { Routes } from '../../services/axios';
 
 export default function About() {
 
-    let [selected, setMember] = useState(false);
-    let [content, setContent] = useState(false);
+    let [members, setMembers] = useState([]);
+    let [member, setMember] = useState({});
+    let [selected, setSelected] = useState(false);
+    let [loading, setLoading] = useState(false);
+
+    useEffect(async () => {
+        setLoading(true);
+        const { url, method } = Routes.api.about();
+        const { data } = await axios[method](url);
+        setLoading(false);
+        setMembers(data);
+    }, [])
 
     function memberClicked(member) {
-        setMember(member.name);
-        setContent(member.content);
+        setMember(member);
+        setSelected(true);
     }
 
     return (
@@ -28,14 +39,15 @@ export default function About() {
             </div>
             <br></br>
 
-            {!selected ? <div className="team-container">
-                <MemberBrief onClick={memberClicked} name="Parth Prajapati" content="Backend Developer" image={avatar}></MemberBrief>
-                <MemberBrief onClick={memberClicked} name="Pankil Parikh" content="Front End Developer" image={avatar}></MemberBrief>
-                <MemberBrief onClick={memberClicked} name="Meet Patel" content="Web Designer" image={avatar}></MemberBrief>
-            </div> :
+            { loading ? <div>Loading...</div> : !selected ? 
+                <div className="team-container">
+                    {members.map(member => 
+                         <MemberBrief onClick={memberClicked} member={member} image={member.image}></MemberBrief>
+                    )}
+                </div> :
+                 <MemberDetails member={member} onClick={() => { setSelected(false) }}></MemberDetails>
+                }
 
-                <MemberDetails name={selected} image={avatar} content={content} onClick={() => { setMember(false); setContent(false); }}></MemberDetails>
-            }
 
         </div>
     )

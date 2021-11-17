@@ -10,5 +10,11 @@ export default {
             url: '/login',
             method: 'post'
         }
+    },
+    about: () => {
+        return {
+            url: '/about',
+            method: 'get'
+        }
     }
 }

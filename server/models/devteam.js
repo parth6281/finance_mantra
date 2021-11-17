@@ -2,8 +2,9 @@ const mongoose = require('mongoose');
 
 const memberSchema = new mongoose.Schema({
     name: String,
+    role: String,
     about: String,
     image: String
 });
 
-mongoose.model('member', memberSchema);
+mongoose.model('Member', memberSchema);
