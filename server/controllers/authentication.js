@@ -1,6 +1,6 @@
 const passport = require('passport');
 const mongoose = require('mongoose');
-const UserModel = require('../models/users.model');
+const User = mongoose.model('User');
 
 
 const register = async (req, res) => {
@@ -9,17 +9,26 @@ const register = async (req, res) => {
             .status(400)
             .json({ "message": "All fields required" });
     }
-    const output = await UserModel.IfUserAlreadyRegistered(req.body.email);
+    const output = await User.IfUserAlreadyRegistered(req.body.email);
     if (output) {
         return res.json({ error: 'User already exists' });
     }
-
-    const user = await UserModel.registerUser(req.body.name, req.body.email, req.body.password);
-
-
-    const token = UserModel.generateJwt(user);
-    res.status(200).json({ token });
-
+    const user = new User();
+    user.name = req.body.name;
+    user.email = req.body.email;
+    user.setPassword(req.body.password);
+    user.save((err) => {
+        if (err) {
+            res
+                .status(404)
+                .json(err);
+        } else {
+            const token = user.generateJwt();
+            res
+                .status(200)
+                .json({ token });
+        }
+    });
 };
 
 const login = (req, res) => {
@@ -36,7 +45,7 @@ const login = (req, res) => {
                 .json(err);
         }
         if (user) {
-            token = UserModel.generateJwt(user);
+            token = user.generateJwt();
             res
                 .status(200)
                 .json({ token });

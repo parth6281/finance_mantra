@@ -1,27 +1,27 @@
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+const mongoose = require('mongoose')
 
-class Income {
-    constructor() {
-        try {
-            this.__income = new global.Mongoose.Schema(
-                {
-                    title: { type: String },
-                    amount: { type: Number },
-                    dateOfIncome: { type: Number },
-                    paymentMethod: { type: String },
-                    categoryId: { type: Schema.Types.ObjectId, default: undefined },
-                    userId: { type: Schema.Types.ObjectId, default: undefined },
-                },
-                {
-                    versionKey: false,
-                }
-            );
-            this.income = global.Mongoose.model("income", this.__income);
-        } catch (error) {
-            this.income = global.Mongoose.model("income");
-        }
+const incomeSchema = new mongoose.Schema({
+    title: {
+        type: String
+    },
+    amount: {
+        type: Number
+    },
+    dateOfIncome: {
+        type: Number
+    },
+    paymentMethod: {
+        type: String
+    },
+    categoryId: {
+        type: mongoose.Schema.Types.ObjectId,
+        default: undefined
+    },
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        default: undefined
     }
-}
+})
 
-module.exports = Income;
+mongoose.model('Income', incomeSchema);
+
