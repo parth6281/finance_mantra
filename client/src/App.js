@@ -1,25 +1,40 @@
 import Framework from './pages/framework/nav';
+import { useState, useEffect } from 'react';
 import './App.css';
 import { BrowserRouter } from "react-router-dom";
 import { Outlet, Route, Router, Routes } from 'react-router-dom';
-import { createBrowserHistory } from 'history';
 import SignUp from './pages/signup';
 import Dashboard from './pages/dashboard/dashboard';
 import Login from './pages/login'
 import About from './pages/about/about';
+import Contact from './pages/contact/contact';
+import Income from './pages/income';
+import IncomeData from './pages/incomeData';
+import Expense from './pages/expense';
+import ExpenseData from './pages/expenseData';
 
 function App() {
-  const history = createBrowserHistory();
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Framework />}>
+      {
+        <Routes>
+          <Route path="/signup" element={<SignUp />}></Route>
           <Route path="/login" element={<Login />}></Route>
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="signup" element={<SignUp />}></Route>
-          <Route path="/about" element={<About />}></Route>
-        </Route>
-      </Routes>
+          <Route path="/" element={<Framework />}>
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/about" element={<About />}></Route>
+            <Route path="/contact" element={<Contact />}></Route>
+            <Route path="/income" element={<IncomeData />}></Route>
+            <Route path="/newIncome" element={<Income />}></Route>
+            <Route path="/newIncome/:incomeId" element={<Income />}></Route>
+            <Route path="/expense" element={<ExpenseData />}></Route>
+            <Route path="/newExpense/:expenseId" element={<Expense />}></Route>
+            <Route path="/newExpense" element={<Expense />}></Route>
+          </Route>
+        </Routes>
+      }
+
     </BrowserRouter >
   )
 }
