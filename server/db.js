@@ -10,6 +10,8 @@ mongoose.connect(dbUrl,
 
 mongoose.connection.on('connected', () => {
     console.log(`Mongoose connected to ${dbUrl}`);
+    global.Mongoose = mongoose;
+    global.Mongoose.Promise = global.Promise;
 })
 
 mongoose.connection.on('error', err => console.log(`Mongoose connection error: ${err}`));

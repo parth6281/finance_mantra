@@ -9,6 +9,7 @@ import InboxIcon from '@mui/icons-material/MoveToInbox';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import MailIcon from '@mui/icons-material/Mail';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -19,7 +20,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import AssessmentIcon from '@mui/icons-material/Assessment';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import CallIcon from '@mui/icons-material/Call';
-import { Link } from '@mui/material';
+import { Link } from 'react-router-dom';
 import logo from '../../public/images/logo.png';
 import { Outlet } from 'react-router-dom';
 import SearchIcon from '@mui/icons-material/Search';
@@ -28,18 +29,62 @@ import CustomizedBreadcrumbs from '../../components/breadcrumb'
 import { About } from '../about/about';
 import './nav.css';
 import SignUp from '../signup';
+import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 
 const drawerWidth = 240;
 
 function Framework(props) {
+    const navigate = useNavigate();
+    let payload = {};
+
+    const status = localStorage.getItem('token')
+    console.log(status);
+    if (!status) {
+        navigate('/login');
+    } else {
+        const p = JSON.parse(atob(status.split('.')[1]));
+        console.log(p);
+        if (p.exp > (Date.now() / 1000)) {
+            payload = p;
+        } else {
+            payload = {};
+            navigate('/login');
+        }
+    }
+
     const path = document.location.pathname.split('/').slice(1);
 
     const { window } = props;
     const [mobileOpen, setMobileOpen] = React.useState(false);
+    const [anchorEl, setAnchorEl] = React.useState(null);
+
+
+
+    const open = Boolean(anchorEl);
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
 
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
     };
+
+    function navigateTo(path) {
+        navigate(path);
+    }
+
+    function logout() {
+        console.log('logout');
+        localStorage.removeItem('token');
+        payload = {}
+        navigate('/login');
+    }
 
     const drawer = (
         <div>
@@ -48,27 +93,31 @@ function Framework(props) {
             </Toolbar>
             <Divider />
             <List>
-                <ListItem button key={'Home'}>
+                <ListItem key={'Home'} component={Link} to={"/dashboard"} sx={{ cursor: 'pointer', color: 'black' }}>
                     <HomeIcon sx={{ mr: '25px' }} />
                     <ListItemText primary={'Home'} />
-                </ListItem>
-                <ListItem button key={'Income'}>
+                </ListItem >
+                <ListItem key={'Income'} component={Link} to={"/income"} sx={{ cursor: 'pointer', color: 'black' }}>
                     <AssessmentIcon sx={{ mr: '25px' }} />
                     <ListItemText primary={'Income'} />
                 </ListItem>
-                <ListItem button key={'Expense'}>
+                {/* <ListItem key={'Expense'} sx={{ cursor: 'pointer', color: 'black' }}>
+                    <AssessmentIcon sx={{ mr: '25px' }} />
+                    <ListItemText primary={'Expense'} />
+                </ListItem> */}
+                <ListItem key={'Expense'} component={Link} to={"/expense"} sx={{ cursor: 'pointer', color: 'black' }}>
                     <AssessmentIcon sx={{ mr: '25px' }} />
                     <ListItemText primary={'Expense'} />
                 </ListItem>
-                <ListItem button key={'Overview'}>
+                <ListItem key={'Overview'} sx={{ cursor: 'pointer', color: 'black' }}>
                     <AssessmentIcon sx={{ mr: '25px' }} />
                     <ListItemText primary={'Overview'} />
                 </ListItem>
-                <ListItem button key={'About Us'}>
+                <ListItem key={'About Us'} component={Link} to={"/about"} sx={{ cursor: 'pointer', color: 'black' }}>
                     <AssessmentIcon sx={{ mr: '25px' }} />
                     <ListItemText primary={'About Us'} />
                 </ListItem>
-                <ListItem button key={'Contact Us'}>
+                <ListItem key={'Contact Us'} component={Link} to={"/contact"} sx={{ cursor: 'pointer', color: 'black' }}>
                     <CallIcon sx={{ mr: '25px' }} />
                     <ListItemText primary={'Contact US'} />
                 </ListItem>
@@ -106,8 +155,22 @@ function Framework(props) {
                     <HomeIcon className="icon" />
                     <NotificationsIcon className="icon" />
                     <SearchIcon className="icon" />
+
+                    <AccountCircleIcon />
+
                     <div className="profile">
-                        <AccountCircleIcon />Pankil
+                        <p onClick={handleClick}>{payload.name ? payload.name.split(' ')[0] : ''}</p>
+                        <Menu
+                            id="basic-menu"
+                            anchorEl={anchorEl}
+                            open={open}
+                            onClose={handleClose}
+                            MenuListProps={{
+                                'aria-labelledby': 'basic-button',
+                            }}
+                        >
+                            <MenuItem onClick={logout}>Logout</MenuItem>
+                        </Menu>
                     </div>
 
 

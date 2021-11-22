@@ -1,13 +1,26 @@
-const mongoose = require('mongoose')
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
-const incomeCategorySchema = new mongoose.Schema({
-    name: {
-        type: String
-    },
-    userId: {
-        type: mongoose.Schema.Types.ObjectId, default: undefined
+class IncomeCategory {
+    constructor() {
+        try {
+            this.__incomeCategory = new global.Mongoose.Schema(
+                {
+                    name: { type: String },
+                    userId: { type: Schema.Types.ObjectId, default: undefined },
+                },
+                {
+                    versionKey: false,
+                }
+            );
+            this.incomeCategory = global.Mongoose.model(
+                "incomecategory",
+                this.__incomeCategory
+            );
+        } catch (error) {
+            this.incomeCategory = global.Mongoose.model("incomecategory");
+        }
     }
-})
+}
 
-
-mongoose.model('IncomeCategory', incomeCategorySchema);
+module.exports = IncomeCategory;

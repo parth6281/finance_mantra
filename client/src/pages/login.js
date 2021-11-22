@@ -12,12 +12,14 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CustomizedSnackbars from '../components/notification.js';
 import axios, { Routes } from '../services/axios'
+import { useNavigate } from 'react-router-dom'
 
 const theme = createTheme();
 
 export default function Login() {
 
     const [errors, setError] = useState(null);
+    const navigate = useNavigate();
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -33,7 +35,11 @@ export default function Login() {
             if (data.message) {
                 setError([data.message]);
             } else {
+                const p = JSON.parse(atob(data.token.split('.')[1]));
                 localStorage.setItem('token', data.token);
+                localStorage.setItem('userId', p.userId);
+                console.log(localStorage.getItem('token'));
+                navigate('/');
             }
         } catch (err) {
             console.log(err);
