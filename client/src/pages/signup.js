@@ -5,7 +5,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -14,31 +14,14 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CustomizedSnackbars from '../components/notification.js';
 import axios, { Routes } from '../services/axios'
+import { useNavigate } from 'react-router-dom'
 
-function Copyright(props) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
 
 const theme = createTheme();
 
 export default function SignUp() {
-
-
-
-
+  const navigate = useNavigate();
   const [errors, setError] = useState(null);
-
-
-
   const validateAlphaNumeric = (text) => {
     const regex = new RegExp(/^[a-zA-Z0-9]+$/i)
     if (!regex.test(text)) {
@@ -121,7 +104,6 @@ export default function SignUp() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-
     const fname = data.get('firstName')
     const lname = data.get('lastName');
     const email = data.get('email');
@@ -141,7 +123,11 @@ export default function SignUp() {
       if (data.error) {
         setError([data.error]);
       } else {
-        console.log('registration ');
+        const p = JSON.parse(atob(data.token.split('.')[1]));
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('userId', p.userId);
+        console.log(localStorage.getItem('token'));
+        navigate('/');
       }
     }
   }

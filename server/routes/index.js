@@ -2,6 +2,9 @@ var express = require('express');
 var router = express.Router();
 const ctrlAuth = require('../controllers/authentication');
 const ctrlAbout = require('../controllers/about');
+const incomeRouter = require('./income');
+const expenseRouter = require('./expense');
+const ctrlUsers = require('../controllers/users');
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
@@ -12,5 +15,10 @@ router.post('/login', ctrlAuth.login);
 router.post('/register', ctrlAuth.register);
 
 router.get('/about', ctrlAbout.about);
+router.use('/income', incomeRouter);
+router.use('/expense', expenseRouter);
+
+router.get('/profile/:userId', ctrlUsers.getProfile);
+router.post('/contact', ctrlUsers.contact);
 
 module.exports = router;

@@ -1,13 +1,20 @@
 const mongoose = require('mongoose')
+const Schema = mongoose.Schema;
 
-const expenseCategorySchema = new mongoose.Schema({
-    name: {
-        type: String
-    },
-    userId: {
-        type: mongoose.Schema.Types.ObjectId, default: undefined
+class ExpenseCategory {
+    constructor() {
+        try {
+            this.__expenseCategory = new global.Mongoose.Schema({
+                name: { type: String },
+                userId: { type: Schema.Types.ObjectId, default: undefined }
+            }, {
+                versionKey: false
+            });
+            this.expenseCategory = global.Mongoose.model('expensecategory', this.__expenseCategory);
+        } catch (error) {
+            this.expenseCategory = global.Mongoose.model('expensecategory');
+        }
     }
-})
+}
 
-
-mongoose.model('ExpenseCategory', expenseCategorySchema);
+module.exports = ExpenseCategory;
