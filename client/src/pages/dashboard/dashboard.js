@@ -69,17 +69,22 @@ export default function Dashboard() {
         <div class="overview">
             <Box className="overview-box-container">
                 <SPaper sx={{ height: 200 }} elevation={8}>
+
+                    {/* Load income data */}
                     <Box className="overview-box">
                         <Typography variant='h3'>Income</Typography>
                         <Typography variant='h5'>${incomeSum}</Typography>
                     </Box>
                 </SPaper >
+                {/* Load expense data */}
                 <SPaper sx={{ height: 200, }} elevation={8} className="overview-box-wrapper">
                     <Box className="overview-box">
                         <Typography variant='h3'>Expense</Typography>
                         <Typography variant='h5'>${expenseSum}</Typography>
                     </Box>
                 </SPaper >
+
+                {/* load saveings */}
                 <SPaper sx={{ height: 200, }} elevation={8} className="overview-box-wrapper">
                     <Box className="overview-box">
                         <Typography variant='h3'>Total Savings</Typography>
@@ -88,6 +93,7 @@ export default function Dashboard() {
                 </SPaper >
             </Box >
 
+            {/* load recent incomes from dance table */}
 
             <div className="recent-container">
                 <h2>Recent Incomes</h2>
@@ -100,6 +106,7 @@ export default function Dashboard() {
 
                     </Box>
                 </div>
+                {/* load rencent expenses from dance table */}
                 <h2>Recent Expenses</h2>
                 <div className="recent">
                     <div>
