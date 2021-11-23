@@ -1,7 +1,7 @@
 import Framework from './pages/framework/nav';
 import { useState, useEffect } from 'react';
 import './App.css';
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, Switch } from "react-router-dom";
 import { Outlet, Route, Router, Routes } from 'react-router-dom';
 import SignUp from './pages/signup';
 import Dashboard from './pages/dashboard/dashboard';

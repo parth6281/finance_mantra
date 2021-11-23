@@ -18,8 +18,8 @@ const theme = createTheme();
 
 export default function Login() {
 
-    const [errors, setError] = useState(null);
     const navigate = useNavigate();
+    const [errors, setError] = useState(null);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -40,6 +40,7 @@ export default function Login() {
                 localStorage.setItem('userId', p.userId);
                 console.log(localStorage.getItem('token'));
                 navigate('/');
+
             }
         } catch (err) {
             console.log(err);

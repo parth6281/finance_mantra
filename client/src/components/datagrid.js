@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
-import { Link } from '@mui/material';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -8,27 +7,21 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import moment from "moment";
+import { useNavigate, Link } from 'react-router-dom';
 
-function createData(name, amount, date, type) {
-    return { name, amount, date, type };
-}
 
-const DataTableFooter = function () {
-
+const DataTableFooter = function ({ url }) {
     return (
         <div style={{ textAlign: 'center', margin: 10 }}>
-            <Link href="/">View More</Link>
+            <Link to={url}>View More</Link>
         </div>
     )
 }
 
 
-export default function DataTable() {
+export default function DataTable({ data, type }) {
 
-    const rows = [
-        createData('Book Publish', 34, '2021-11-09', 'Cash'),
-        createData('Book Publish', 34, '2021-11-09', 'Cash')
-    ]
 
     return (
         <div style={{}}>
@@ -44,24 +37,24 @@ export default function DataTable() {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {rows.map((row) => (
+                        {data.map((row) => (
                             <TableRow
-                                key={row.name}
+                                key={row.title}
                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                             >
                                 <TableCell component="th" scope="row">
-                                    {row.name}
+                                    {row.title}
                                 </TableCell>
-                                <TableCell align="right">{row.name}</TableCell>
                                 <TableCell align="right">{row.amount}</TableCell>
-                                <TableCell align="right">{row.date}</TableCell>
+                                <TableCell align="right">{moment(type == 'income' ? row.dateOfIncome : row.dateOfExpense).format('YYYY-MM-DD')}</TableCell>
+                                <TableCell align="right">{row.paymentMethod}</TableCell>
                                 <TableCell align="right">{row.type}</TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
                 </Table>
             </TableContainer>
-            <DataTableFooter></DataTableFooter>
+            <DataTableFooter url={type == 'income' ? '/income' : '/expense'}></DataTableFooter>
         </div>
     );
 }
