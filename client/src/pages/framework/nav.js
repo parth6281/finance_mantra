@@ -109,9 +109,9 @@ function Framework(props) {
                     <AssessmentIcon sx={{ mr: '25px' }} />
                     <ListItemText primary={'Expense'} />
                 </ListItem>
-                <ListItem key={'Overview'} sx={{ cursor: 'pointer', color: 'black' }}>
+                <ListItem key={'Donate'} sx={{ cursor: 'pointer', color: 'black' }} component={Link} to={"/donate"} >
                     <AssessmentIcon sx={{ mr: '25px' }} />
-                    <ListItemText primary={'Overview'} />
+                    <ListItemText primary={'Donate'} />
                 </ListItem>
                 <ListItem key={'About Us'} component={Link} to={"/about"} sx={{ cursor: 'pointer', color: 'black' }}>
                     <AssessmentIcon sx={{ mr: '25px' }} />

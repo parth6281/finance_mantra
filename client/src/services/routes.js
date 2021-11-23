@@ -124,5 +124,18 @@ export default {
             url: '/contact/',
             method: 'post'
         }
+
+    },
+    getPublishableKey: () => {
+        return {
+            url: '/stripe/publishableKey',
+            method: 'get'
+        }
+    },
+    createPaymentIntent: () => {
+        return {
+            url: '/stripe/create-payment-intent',
+            method: 'post'
+        }
     }
 }

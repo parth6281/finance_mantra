@@ -12,6 +12,8 @@ import Income from './pages/income';
 import IncomeData from './pages/incomeData';
 import Expense from './pages/expense';
 import ExpenseData from './pages/expenseData';
+import Donate from './pages/donation/donate';
+import Card from './components/card';
 
 function App() {
   return (
@@ -21,7 +23,6 @@ function App() {
           <Route path="/signup" element={<SignUp />}></Route>
           <Route path="/login" element={<Login />}></Route>
           <Route path="/" element={<Framework />}>
-            <Route path="/" element={<Dashboard />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/about" element={<About />}></Route>
             <Route path="/contact" element={<Contact />}></Route>
@@ -31,6 +32,7 @@ function App() {
             <Route path="/expense" element={<ExpenseData />}></Route>
             <Route path="/newExpense/:expenseId" element={<Expense />}></Route>
             <Route path="/newExpense" element={<Expense />}></Route>
+            <Route path="/donate" element={<Donate />}></Route>
           </Route>
         </Routes>
       }
