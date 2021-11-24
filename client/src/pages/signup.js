@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+import AppBar from '@mui/material/AppBar';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
+import Toolbar from '@mui/material/Toolbar';
 import { Link, Navigate } from 'react-router-dom';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -13,6 +15,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CustomizedSnackbars from '../components/notification.js';
+import logo from '../public/images/logo.png';
 import axios, { Routes } from '../services/axios'
 import { useNavigate } from 'react-router-dom'
 
@@ -137,7 +140,26 @@ export default function SignUp() {
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
-        {errors ? <CustomizedSnackbars op={true} errors={errors} severity={'error'} /> : <></>}
+        <AppBar
+          position="fixed"
+          sx={{
+            width: { sm: `calc(100% - 240px)` },
+          }}
+        >
+          <Toolbar>
+            <Typography variant="h4" style={{ flexGrow: 1 }}>
+              Finance Mantra
+            </Typography>
+
+
+          </Toolbar>
+        </AppBar>
+        <Toolbar style={{ position: 'fixed', left: 0, top: -10 }}>
+          <img src={logo} style={{ maxWidth: '160px', height: '90px' }} />
+        </Toolbar>
+        <div style={{ marginTop: 100 }}>
+          {errors ? <CustomizedSnackbars op={true} errors={errors} severity={'error'} /> : <></>}
+        </div>
         <Box
           sx={{
             marginTop: 8,
@@ -214,7 +236,17 @@ export default function SignUp() {
             </Grid>
           </Box>
         </Box>
-
+        <AppBar position='fixed' sx={{
+          bottom: 0, top: 'inherit', bgcolor: 'black', width: { sm: `calc(100%)` },
+        }}
+          component='footer'
+        >
+          <Toolbar variant='dense'>
+            <Typography variant="small" noWrap component="div" sx={{ margin: 'auto' }}>
+              Copyright @ 2021 | Finance Mantra
+            </Typography>
+          </Toolbar>
+        </AppBar>
         {/* <Copyright sx={{ mt: 5 }} /> */}
       </Container>
     </ThemeProvider >

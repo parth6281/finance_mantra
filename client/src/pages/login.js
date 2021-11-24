@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
+import IconButton from '@mui/material/IconButton';
+import AppBar from '@mui/material/AppBar';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
+import Toolbar from '@mui/material/Toolbar';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import { Link } from 'react-router-dom';
@@ -10,9 +13,11 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Drawer from '@mui/material/Drawer';
 import CustomizedSnackbars from '../components/notification.js';
 import axios, { Routes } from '../services/axios'
 import { useNavigate } from 'react-router-dom'
+import logo from '../public/images/logo.png';
 
 const theme = createTheme();
 
@@ -51,7 +56,26 @@ export default function Login() {
         <ThemeProvider theme={theme}>
             <Container component="main" maxWidth="xs">
                 <CssBaseline />
-                {errors ? <CustomizedSnackbars op={true} errors={errors} severity={'error'} /> : <></>}
+                <AppBar
+                    position="fixed"
+                    sx={{
+                        width: { sm: `calc(100% - 240px)` },
+                    }}
+                >
+                    <Toolbar>
+                        <Typography variant="h4" style={{ flexGrow: 1 }}>
+                            Finance Mantra
+                        </Typography>
+
+
+                    </Toolbar>
+                </AppBar>
+                <Toolbar style={{ position: 'fixed', left: 0, top: -10 }}>
+                    <img src={logo} style={{ maxWidth: '160px', height: '90px' }} />
+                </Toolbar>
+                <div style={{ marginTop: 100 }}>
+                    {errors ? <CustomizedSnackbars op={true} errors={errors} severity={'error'} /> : <></>}
+                </div>
                 <Box
                     sx={{
                         marginTop: 8,
@@ -107,9 +131,19 @@ export default function Login() {
                         </Grid>
                     </Box>
                 </Box>
-
                 {/* <Copyright sx={{ mt: 5 }} /> */}
             </Container>
+            <AppBar position='fixed' sx={{
+                bottom: 0, top: 'inherit', bgcolor: 'black', width: { sm: `calc(100%)` },
+            }}
+                component='footer'
+            >
+                <Toolbar variant='dense'>
+                    <Typography variant="small" noWrap component="div" sx={{ margin: 'auto' }}>
+                        Copyright @ 2021 | Finance Mantra
+                    </Typography>
+                </Toolbar>
+            </AppBar>
         </ThemeProvider >
     );
 }

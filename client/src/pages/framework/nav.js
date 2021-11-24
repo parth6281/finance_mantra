@@ -109,6 +109,10 @@ function Framework(props) {
                     <AssessmentIcon sx={{ mr: '25px' }} />
                     <ListItemText primary={'Expense'} />
                 </ListItem>
+                <ListItem key={'Reports'} component={Link} to={"/reports"} sx={{ cursor: 'pointer', color: 'black' }}>
+                    <AssessmentIcon sx={{ mr: '25px' }} />
+                    <ListItemText primary={'Reports'} />
+                </ListItem>
                 <ListItem key={'Donate'} sx={{ cursor: 'pointer', color: 'black' }} component={Link} to={"/donate"} >
                     <AssessmentIcon sx={{ mr: '25px' }} />
                     <ListItemText primary={'Donate'} />
@@ -152,9 +156,6 @@ function Framework(props) {
                     <Typography variant="h6" style={{ flexGrow: 1 }}>
                         Finance Mantra
                     </Typography>
-                    <HomeIcon className="icon" />
-                    <NotificationsIcon className="icon" />
-                    <SearchIcon className="icon" />
 
                     <AccountCircleIcon />
 

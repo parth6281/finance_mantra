@@ -14,6 +14,7 @@ import Expense from './pages/expense';
 import ExpenseData from './pages/expenseData';
 import Donate from './pages/donation/donate';
 import Card from './components/card';
+import LineChart from './pages/reports/LineChart';
 
 function App() {
   return (
@@ -23,9 +24,11 @@ function App() {
           <Route path="/signup" element={<SignUp />}></Route>
           <Route path="/login" element={<Login />}></Route>
           <Route path="/" element={<Framework />}>
+            <Route path="/" element={<Dashboard />}></Route>
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/about" element={<About />}></Route>
             <Route path="/contact" element={<Contact />}></Route>
+            <Route path="/reports" element={<LineChart />}></Route>
             <Route path="/income" element={<IncomeData />}></Route>
             <Route path="/newIncome" element={<Income />}></Route>
             <Route path="/newIncome/:incomeId" element={<Income />}></Route>
